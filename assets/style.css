@@ -1,0 +1,16 @@
+body {
+    background: black;
+}
+
+.magi {
+    display: flex;
+}
+
+.magi>.wise-man {
+    border: 3px solid #ff8d00;
+    padding: 50px;
+    margin: 10px;
+    font-family: Helvetica;
+    font-size: 3em;
+    font-weight: bold;
+}
