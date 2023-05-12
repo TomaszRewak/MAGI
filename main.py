@@ -8,6 +8,9 @@ app = Dash(__name__)
 Magi = load_react_component(app, 'components', 'magi.js')
 WiseMan = load_react_component(app, 'components', 'wise_man.js')
 
+# 質問 - question
+# 解決 - resolution
+
 app.layout = Magi(id='magi', children=[
     WiseMan(id='melchior', name='MELCHIOR', order_number=1, status='yes'),
     WiseMan(id='baltasar', name='BALTASAR', order_number=2, status='no'),
