@@ -162,3 +162,7 @@ cython_debug/
 # IDE
 
 .vscode/
+
+# Dash
+
+file_system_backend/

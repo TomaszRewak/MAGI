@@ -14,3 +14,8 @@ body {
     font-size: 3em;
     font-weight: bold;
 }
+
+.system-status {
+    font-family: Helvetica;
+    color: #ff8d00;
+}
