@@ -23,8 +23,15 @@ app.layout = Magi(id='magi', children=[
             html.Div(children='EX_MODE : OFF'),
             html.Div(children='PRIORITY : AAA')]),
     WiseMan(id={'type': 'wise-man', 'name': 'melchior'}, name='melchior', order_number=1, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
-    WiseMan(id={'type': 'wise-man', 'name': 'baltasar'}, name='baltasar', order_number=2, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+    WiseMan(id={'type': 'wise-man', 'name': 'balthasar'}, name='balthasar', order_number=2, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
     WiseMan(id={'type': 'wise-man', 'name': 'casper'}, name='casper', order_number=3, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+    html.Div(className='title', children='MAGI'),
+    html.Div(className='header', children=[
+        html.Hr(),
+        html.Hr(),
+        html.Hr(),
+        html.Hr()
+    ]),
     dcc.Input(id='query', type='text', value='', debounce=True, autoComplete='off'),
 
     dcc.Store(id='question', data={'id': 0, 'query': ''}),

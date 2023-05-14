@@ -5,26 +5,39 @@ body {
 .magi {
     height: 50vh;
     display: grid;
-    grid-template-columns: 20px 2fr 20px 1fr 1fr 1fr 20px 2fr 20px;
-    grid-template-rows: 20px 1fr 1fr 1fr 20px 1fr 20px;
+    grid-template-columns: 20px 2fr 0.5fr 1fr 0.5fr 2fr 20px;
+    grid-template-rows: 20px 2fr 2fr 1fr 3fr 20px;
+}
+
+.magi>.title {
+    grid-area: 5 / 4;
+    color: #ff8d00;
+    text-align: center;
+    font-size: 4em;
 }
 
 .magi>.wise-man {
     font-family: Helvetica;
-    font-size: 3em;
+    font-size: 4em;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .magi>.wise-man.melchior {
-    grid-area: 4 / 6 / 7 / 9;
+    grid-area: 4 / 5 / 6 / 7;
+    clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%, 0 44%)
 }
 
-.magi>.wise-man.baltasar {
-    grid-area: 2 / 4 / 5 / 7;
+.magi>.wise-man.balthasar {
+    grid-area: 2 / 3 / 5 / 6;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 75% 100%, 25% 100%, 0 80%);
 }
 
 .magi>.wise-man.casper {
-    grid-area: 4 / 2 / 7 /5;
+    grid-area: 4 / 2 / 6 / 4;
+    clip-path: polygon(0 0, 65% 0, 100% 44%, 100% 100%, 0 100%);
 }
 
 .system-status {
