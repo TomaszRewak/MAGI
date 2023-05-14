@@ -10,27 +10,34 @@ app = Dash(__name__)
 Magi = load_react_component(app, 'components', 'magi.js')
 WiseMan = load_react_component(app, 'components', 'wise_man.js')
 
-# 質問 - question
-# 解決 - resolution
-
-app.layout = Magi(id='magi', children=[
-    html.Div(
-        className='system-status',
-        children=[
-            html.Div(children='CODE : 473'),
-            html.Div(children='FILE : MAGI_SYS'),
-            html.Div(id='extention', children='EXTENTION : ????'),
-            html.Div(children='EX_MODE : OFF'),
-            html.Div(children='PRIORITY : AAA')]),
-    WiseMan(id={'type': 'wise-man', 'name': 'melchior'}, name='melchior', order_number=1, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
-    WiseMan(id={'type': 'wise-man', 'name': 'balthasar'}, name='balthasar', order_number=2, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
-    WiseMan(id={'type': 'wise-man', 'name': 'casper'}, name='casper', order_number=3, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
-    html.Div(className='title', children='MAGI'),
-    html.Div(className='header', children=[
-        html.Hr(),
-        html.Hr(),
-        html.Hr(),
-        html.Hr()
+app.layout = html.Div(children=[
+    Magi(id='magi', children=[
+        html.Div(
+            className='system-status',
+            children=[
+                html.Div(children='CODE : 473'),
+                html.Div(children='FILE : MAGI_SYS'),
+                html.Div(id='extention', children='EXTENTION : ????'),
+                html.Div(children='EX_MODE : OFF'),
+                html.Div(children='PRIORITY : AAA')]),
+        WiseMan(id={'type': 'wise-man', 'name': 'melchior'}, name='melchior', order_number=1, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+        WiseMan(id={'type': 'wise-man', 'name': 'balthasar'}, name='balthasar', order_number=2, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+        WiseMan(id={'type': 'wise-man', 'name': 'casper'}, name='casper', order_number=3, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+        html.Div(className='title', children='MAGI'),
+        html.Div(className='header left', children=[
+            html.Hr(),
+            html.Hr(),
+            html.Span('質 問 '),
+            html.Hr(),
+            html.Hr()
+        ]),
+        html.Div(className='header right', children=[
+            html.Hr(),
+            html.Hr(),
+            html.Span('解 決 '),
+            html.Hr(),
+            html.Hr()
+        ])
     ]),
     dcc.Input(id='query', type='text', value='', debounce=True, autoComplete='off'),
 
