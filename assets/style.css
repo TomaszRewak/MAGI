@@ -3,16 +3,28 @@ body {
 }
 
 .magi {
-    display: flex;
+    height: 50vh;
+    display: grid;
+    grid-template-columns: 20px 2fr 20px 1fr 1fr 1fr 20px 2fr 20px;
+    grid-template-rows: 20px 1fr 1fr 1fr 20px 1fr 20px;
 }
 
 .magi>.wise-man {
-    border: 3px solid #ff8d00;
-    padding: 50px;
-    margin: 10px;
     font-family: Helvetica;
     font-size: 3em;
     font-weight: bold;
+}
+
+.magi>.wise-man.melchior {
+    grid-area: 4 / 6 / 7 / 9;
+}
+
+.magi>.wise-man.baltasar {
+    grid-area: 2 / 4 / 5 / 7;
+}
+
+.magi>.wise-man.casper {
+    grid-area: 4 / 2 / 7 /5;
 }
 
 .system-status {

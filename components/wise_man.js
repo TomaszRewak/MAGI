@@ -19,10 +19,11 @@ function useColor(status, processing) {
 
 export default function WiseMan(props) {
     const { setProps, name, order_number, question_id, answer } = props;
-    const fullName = `${name} • ${order_number}`;
+    const fullName = `${name.toUpperCase()} • ${order_number}`;
     const color = useColor(answer['status'], question_id !== answer['id']);
 
-    return React.createElement('div', { className: 'wise-man', style: { background: color } }, [
+    return React.createElement('div', { className: `wise-man ${name}`, style: { background: color } }, 
+    [
         fullName
     ])
 }

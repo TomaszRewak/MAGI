@@ -7,21 +7,6 @@ import random
 
 app = Dash(__name__)
 
-
-@dataclass
-class WiseManDefinition:
-    id: str
-    name: str
-    order_number: int
-    system_prompt: str
-
-
-wise_man = [
-    WiseManDefinition(id='melchior', name='MELCHIOR', order_number=1, system_prompt='You are a wise man'),
-    WiseManDefinition(id='baltasar', name='BALTASAR', order_number=2, system_prompt='You are a wise man'),
-    WiseManDefinition(id='casper', name='CASPAR', order_number=3, system_prompt='You are a wise man'),
-]
-
 Magi = load_react_component(app, 'components', 'magi.js')
 WiseMan = load_react_component(app, 'components', 'wise_man.js')
 
@@ -37,9 +22,9 @@ app.layout = Magi(id='magi', children=[
             html.Div(id='extention', children='EXTENTION : ????'),
             html.Div(children='EX_MODE : OFF'),
             html.Div(children='PRIORITY : AAA')]),
-    WiseMan(id={'type': 'wise-man', 'name': 'melchior'}, name='MELCHIOR', order_number=1, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
-    WiseMan(id={'type': 'wise-man', 'name': 'baltasar'}, name='BALTASAR', order_number=2, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
-    WiseMan(id={'type': 'wise-man', 'name': 'casper'}, name='CASPAR', order_number=3, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+    WiseMan(id={'type': 'wise-man', 'name': 'melchior'}, name='melchior', order_number=1, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+    WiseMan(id={'type': 'wise-man', 'name': 'baltasar'}, name='baltasar', order_number=2, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+    WiseMan(id={'type': 'wise-man', 'name': 'casper'}, name='casper', order_number=3, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
     dcc.Input(id='query', type='text', value='', debounce=True, autoComplete='off'),
 
     dcc.Store(id='question', data={'id': 0, 'query': ''}),
