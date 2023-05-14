@@ -1,7 +1,10 @@
 import React from 'react';
 
 
-function useColor(status) {
+function useColor(status, processing) {
+    if (processing)
+        return '#f1f1f1';
+
     if (status === 'yes')
         return '#52e691';
 
@@ -15,9 +18,9 @@ function useColor(status) {
 }
 
 export default function WiseMan(props) {
-    const { setProps, name, order_number, status } = props;
+    const { setProps, name, order_number, question_id, answer } = props;
     const fullName = `${name} • ${order_number}`;
-    const color = useColor(status);
+    const color = useColor(answer['status'], question_id !== answer['id']);
 
     return React.createElement('div', { className: 'wise-man', style: { background: color } }, [
         fullName

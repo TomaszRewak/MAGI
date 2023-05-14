@@ -3,6 +3,7 @@ from dash_extensions.enrich import Dash, Input, Output, State, Trigger, callback
 import dash_core_components as dcc
 import dash_html_components as html
 from dash_local_react_components import load_react_component
+import random
 
 app = Dash(__name__)
 
@@ -16,12 +17,9 @@ class WiseManDefinition:
 
 
 wise_man = [
-    WiseManDefinition(id='melchior', name='MELCHIOR',
-                      order_number=1, system_prompt='You are a wise man'),
-    WiseManDefinition(id='baltasar', name='BALTASAR',
-                      order_number=2, system_prompt='You are a wise man'),
-    WiseManDefinition(id='casper', name='CASPAR', order_number=3,
-                      system_prompt='You are a wise man'),
+    WiseManDefinition(id='melchior', name='MELCHIOR', order_number=1, system_prompt='You are a wise man'),
+    WiseManDefinition(id='baltasar', name='BALTASAR', order_number=2, system_prompt='You are a wise man'),
+    WiseManDefinition(id='casper', name='CASPAR', order_number=3, system_prompt='You are a wise man'),
 ]
 
 Magi = load_react_component(app, 'components', 'magi.js')
@@ -39,40 +37,58 @@ app.layout = Magi(id='magi', children=[
             html.Div(id='extention', children='EXTENTION : ????'),
             html.Div(children='EX_MODE : OFF'),
             html.Div(children='PRIORITY : AAA')]),
-    WiseMan(id={'type': 'wise-man', 'name': 'melchior'},
-            name='MELCHIOR', order_number=1, status='yes'),
-    WiseMan(id={'type': 'wise-man', 'name': 'baltasar'},
-            name='BALTASAR', order_number=2, status='no'),
-    WiseMan(id={'type': 'wise-man', 'name': 'casper'},
-            name='CASPAR', order_number=3, status='info'),
-    dcc.Input(id='query', type='text', value='',
-              debounce=True, autoComplete='off'),
-    dcc.Store(id='is_yes_no_question', data=False)
+    WiseMan(id={'type': 'wise-man', 'name': 'melchior'}, name='MELCHIOR', order_number=1, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+    WiseMan(id={'type': 'wise-man', 'name': 'baltasar'}, name='BALTASAR', order_number=2, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+    WiseMan(id={'type': 'wise-man', 'name': 'casper'}, name='CASPAR', order_number=3, question_id=0, answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+    dcc.Input(id='query', type='text', value='', debounce=True, autoComplete='off'),
+
+    dcc.Store(id='question', data={'id': 0, 'query': ''}),
+    dcc.Store(id='annotated-question', data={'id': 0, 'query': '', 'is_yes_no_question': False}),
+    dcc.Store(id='is_yes_no_question', data=False),
+    dcc.Store(id='question-id', data=0),
 ])
 
 
 @callback(
-    Output('is_yes_no_question', 'data'),
+    Output('question', 'data'),
     Input('query', 'value'),
-    prevent_initial_call=True)
-def is_yes_no_question(query: str):
-    print('Checking if question is a yes/no question')
-    return query.endswith('?')
+    State('question', 'data'))
+def question(query: str, question: dict):
+    return {'id': question['id'] + 1, 'query': query}
+
+
+@callback(
+    Output('annotated-question', 'data'),
+    Input('question', 'data'))
+def annotated_question(question: dict):
+    return {'id': question['id'], 'query': question['query'], 'is_yes_no_question': question['query'].endswith('?')}
 
 
 @callback(
     Output('extention', 'children'),
-    Input('is_yes_no_question', 'data'))
-def extention(is_yes_no_question: bool):
-    code = '2137' if is_yes_no_question else '3023'
+    Input('question', 'data'),
+    Input('annotated-question', 'data'))
+def extention(question: dict, annotated_question: dict):
+    if question['id'] != annotated_question['id']:
+        return 'EXTENTION : ????'
+
+    code = '2137' if annotated_question['is_yes_no_question'] else '3023'
     return f'EXTENTION : {code}'
 
 
 @callback(
-    Output({'type': 'wise-man', 'name': MATCH}, 'status'),
-    Input('is_yes_no_question', 'data'))
-def wise_man_status(is_yes_no_question: bool):
-    return 'yes' if is_yes_no_question else 'info'
+    Output({'type': 'wise-man', 'name': MATCH}, 'answer'),
+    Input('annotated-question', 'data'),
+    State({'type': 'wise-man', 'name': MATCH}, 'id'))
+def wise_man_answer(question: dict, id: dict):
+    return {'id': question['id'], 'response': 'Just an example', 'status': 'info' if not question['is_yes_no_question'] else random.choice(['yes', 'no'])}
+
+
+@callback(
+    Output({'type': 'wise-man', 'name': MATCH}, 'question_id'),
+    Input('question', 'data'))
+def question_id(question: dict):
+    return question['id']
 
 
 if __name__ == '__main__':
