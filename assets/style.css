@@ -50,11 +50,48 @@ input {
 
 .magi>.system-status {
     grid-area: 3 / 2 / 4 / 3;
-    font-family: Helvetica;
+    font-family: 'Helvetica';
+    font-family: 'Lucida Console';
     color: #ff8d00;
 }
 
+.magi>.system-status>div {
+    font-size: 3cqh;
+    margin-left: 4cqw;
+    transform: scaleX(1.2);
+    transform-origin: left;
+}
+
+.magi>.system-status>div:first-child {
+    font-size: 6cqh;
+    margin-left: 0;
+}
+
+.magi>.response {
+    grid-area: 3 / 6 / 4 / 7;
+    justify-self: flex-end;
+    align-self: center;
+    border: solid 2px;
+    padding: 2px;
+}
+
+.magi>.response>.inner {
+    white-space: nowrap;
+    border: solid 2px;
+    padding: 2px 10px;
+    font-size: 8cqh;
+    font-weight: bold;
+}
+
 .magi>.wise-man {
+    display: flex;
+    background: #ff8d00;
+    padding: 2px;
+}
+
+.magi>.wise-man>.inner {
+    width: 100%;
+    height: 100%;
     font-family: Helvetica;
     font-size: 8cqh;
     font-weight: bold;
@@ -65,15 +102,63 @@ input {
 
 .magi>.wise-man.melchior {
     grid-area: 4 / 5 / 6 / 7;
+}
+
+.magi>.wise-man.melchior,
+.magi>.wise-man.melchior>.inner {
     clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%, 0 44%)
 }
 
 .magi>.wise-man.balthasar {
     grid-area: 2 / 3 / 5 / 6;
+}
+
+.magi>.wise-man.balthasar,
+.magi>.wise-man.balthasar>.inner {
     clip-path: polygon(0 0, 100% 0, 100% 80%, 75% 100%, 25% 100%, 0 80%);
 }
 
 .magi>.wise-man.casper {
     grid-area: 4 / 2 / 6 / 4;
+}
+
+.magi>.wise-man.casper,
+.magi>.wise-man.casper>.inner {
     clip-path: polygon(0 0, 65% 0, 100% 44%, 100% 100%, 0 100%);
+}
+
+@keyframes flicker-animation {
+    0% {}
+
+    50% {
+        background: black;
+        color: black;
+        border-color: black;
+    }
+}
+
+.flicker {
+    animation: flicker-animation 0.25s infinite step-end;
+}
+
+
+.connection {
+    height: 10px;
+    background: #ff8d00;
+    align-self: center;
+    margin: -10%;
+}
+
+.connection.casper-balthasar {
+    grid-area: 4 / 3 / 5 / 4;
+    transform: rotate(-54deg);
+}
+
+.connection.casper-melchior {
+    grid-area: 5 / 4 / 6 / 5;
+}
+
+.connection.balthasar-melchior {
+    grid-area: 4 / 5 / 5 / 6;
+    transform: rotate(54deg);
 }
