@@ -1,11 +1,21 @@
-body {
-    background: black;
+html {
+    background: repeating-linear-gradient(45deg, rgb(0 0 0) 0px, rgb(0 0 0) 20px, #211200 20px, #211200 40px);
+    min-height: 100vh;
 }
 
-input {
+body {
+    margin: 15px;
+}
+
+.system {
     background: black;
     border: 2px solid #ff8d00;
-    color: #ff8d00;
+    padding: 15px;
+    max-width: 1500px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 0 auto;
 }
 
 .magi {
@@ -87,6 +97,7 @@ input {
     display: flex;
     background: #ff8d00;
     padding: 2px;
+    cursor: pointer;
 }
 
 .magi>.wise-man>.inner {
@@ -161,4 +172,58 @@ input {
 .connection.balthasar-melchior {
     grid-area: 4 / 5 / 5 / 6;
     transform: rotate(54deg);
+}
+
+.modal {
+    border: 2px solid #ff8d00;
+    color: #ff8d00;
+    font-family: 'Helvetica';
+    font-family: 'Lucida Console';
+    position: absolute;
+    background: black;
+    max-width: 40vw;
+    top: 10vh;
+    right: 10vw;
+}
+
+.modal>.modal-header {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid #ff8d00;
+}
+
+.modal>.modal-header>.modal-title {
+    flex: 1;
+    padding: 5px;
+    background: repeating-linear-gradient(45deg, rgb(0 0 0) 0px, rgb(0 0 0) 10px, #211200 10px, #211200 20px);
+}
+
+.modal>.modal-header>.close {
+    padding: 5px;
+    border-left: 2px solid #ff8d00;
+    cursor: pointer;
+}
+
+.modal>.modal-body {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+    padding: 10px;
+}
+
+.input-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    color: #ff8d00;
+    font-family: 'Helvetica';
+    font-family: 'Lucida Console';
+    column-gap: 10px;
+    row-gap: 5px;
+    margin-top: 15px;
+}
+
+.input-container > input {
+    background: #211200;
+    border: 2px solid #ff8d00;
+    color: #ff8d00;
 }

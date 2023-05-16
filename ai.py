@@ -28,13 +28,12 @@ def get_answer(question: str, personality: str, key: str):
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[
-            {'role': 'system', 'content': personality},
-            {'role': 'system', 'content': 'Your answers are rather concise.'},
+            {'role': 'system', 'content': f'{personality} Your answers are rather concise.'},
             {'role': 'user', 'content': question},
         ]
     )
 
-    return response['choices'][0]['text']
+    return response['choices'][0]['message']['content']
 
 
 def classify_answer(question: str, personality: str, answer: str, key: str):
@@ -42,8 +41,7 @@ def classify_answer(question: str, personality: str, answer: str, key: str):
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[
-            {'role': 'system', 'content': personality},
-            {'role': 'system', 'content': 'Your answers are rather concise.'},
+            {'role': 'system', 'content': f'{personality} Your answers are rather concise.'},
             {'role': 'user', 'content': question},
             {'role': 'system', 'content': answer},
             {'role': 'user', 'content': 'Summarize you answer with a simple "yes" or "no" (answering with a single word). If (and only if) that\'s not possible, instead of answering with "yes" or "no", list conditions under which the answer would be "yes".'},
@@ -53,9 +51,9 @@ def classify_answer(question: str, personality: str, answer: str, key: str):
     content = response['choices'][0]['message']['content']
 
     if re.match('^\W*yes\W*$', content, re.IGNORECASE):
-        return {'classification': True, 'conditions': None}
+        return {'status': 'yes', 'conditions': None}
 
     if re.match('^\W*no\W*$', content, re.IGNORECASE):
-        return {'classification': False, 'conditions': None}
+        return {'status': 'no', 'conditions': None}
 
-    return {'classification': True, 'conditions': content}
+    return {'status': 'conditional', 'conditions': content}
