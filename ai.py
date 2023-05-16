@@ -6,9 +6,14 @@ def is_yes_or_no_question(question: str, key: str):
     openai.api_key = key
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
+        logit_bias={
+            9642: 100,  # Yes
+            2822: 90  # No
+        },
+        max_tokens=1,
         messages=[
             {'role': 'system', 'content': 'You answer questions with a simple "yes" or "no".'},
-            {'role': 'user', 'content': f'Can the following question be generally answered with a "yes" or "no"? \n {question}'},
+            {'role': 'user', 'content': f'Is the following question a boolean question? \n {question}'},
         ]
     )
 
