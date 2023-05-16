@@ -10,7 +10,11 @@ Originally designed by Dr. Naoko Akagi, each of the three agents reflects a sepa
 Those (often conflicting, yet complementary) agents often participate in a voting process in order to answer most challenging questions. 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/TomaszRewak/MAGI/master/examples/example.gif" width=800/>
+  <img src="https://raw.githubusercontent.com/TomaszRewak/MAGI/master/examples/example_1.gif" width=800/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/TomaszRewak/MAGI/master/examples/example_2.gif" width=800/>
 </p>
 
 ## Implementation
