@@ -13,6 +13,9 @@ function getStatusText(status) {
     if (status === 'conditional')
         return '状 態';
 
+    if (status === 'error')
+        return '誤 差'
+
     throw new Error('Invalid status: ' + status);
 }
 
@@ -28,6 +31,9 @@ function getStatusColor(status) {
 
     if (status === 'conditional')
         return '#ff8d00';
+
+    if (status === 'error')
+        return 'gray';
 
     throw new Error('Invalid status: ' + status);
 }

@@ -46,23 +46,17 @@ app.layout = html.Div(
                   id={'type': 'wise-man', 'name': 'melchior'},
                   name='melchior',
                   order_number=1,
-                  personality='You are a scientist. Your goal is to further our understanding of the universe and advance our technological progress.',
-                  question_id=0,
-                  answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+                  personality='You are a scientist. Your goal is to further our understanding of the universe and advance our technological progress.'),
             WiseMan(
                   id={'type': 'wise-man', 'name': 'balthasar'},
                   name='balthasar',
                   order_number=2,
-                  personality='You are a mother. Your goal is to protect your children and ensure their well-being.',
-                  question_id=0,
-                  answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+                  personality='You are a mother. Your goal is to protect your children and ensure their well-being.'),
             WiseMan(
                   id={'type': 'wise-man', 'name': 'casper'},
                   name='casper',
                   order_number=3,
-                  personality='You are a woman. Your goal is to pursue love, dreams and desires.',
-                  question_id=0,
-                  answer={'id': 0, 'response': 'yes', 'status': 'yes'}),
+                  personality='You are a woman. Your goal is to pursue love, dreams and desires.'),
             Response(id='response', status='info'),
             html.Div(className='title', children='MAGI')
         ]),
@@ -174,14 +168,19 @@ def question_id(question: dict):
 
 @callback(
     Output('response', 'status'),
-    Input({'type': 'wise-man', 'name': ALL}, 'answer'))
+    Input({'type': 'wise-man', 'name': ALL}, 'answer'),
+    prevent_initial_call=True)
 def response_status(answers: list):
+    if any([answer['status'] == 'error' for answer in answers]):
+        return 'error'
+    if any([answer['status'] == 'no' for answer in answers]):
+        return 'no'
+    if any([answer['status'] == 'conditional' for answer in answers]):
+        return 'conditional'
     if all([answer['status'] == 'yes' for answer in answers]):
         return 'yes'
-    elif any([answer['status'] == 'no' for answer in answers]):
-        return 'no'
-    else:
-        return 'info'
+    
+    return 'info'
 
 
 @callback(

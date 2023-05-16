@@ -1,5 +1,5 @@
 html {
-    background: repeating-linear-gradient(45deg, rgb(0 0 0) 0px, rgb(0 0 0) 20px, #211200 20px, #211200 40px);
+    background: repeating-linear-gradient(45deg, rgb(0 0 0) 0px, rgb(0 0 0) 20px, #140b02 20px, #140b02 40px);
     min-height: 100vh;
 }
 
@@ -222,8 +222,8 @@ body {
     margin-top: 15px;
 }
 
-.input-container > input {
-    background: #211200;
+.input-container>input {
+    background: #1f1203;
     border: 2px solid #ff8d00;
     color: #ff8d00;
 }

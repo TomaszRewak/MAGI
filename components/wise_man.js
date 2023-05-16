@@ -39,5 +39,13 @@ export default function WiseMan(props) {
 }
 
 WiseMan.defaultProps = {
-    n_clicks: 0
+    n_clicks: 0,
+    question_id: 0,
+    answer: {
+        id: 0,
+        status: 'info',
+        error: '',
+        conditions: '',
+        response: 'Waiting for query...'
+    }
 };
