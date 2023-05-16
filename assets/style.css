@@ -11,7 +11,7 @@ body {
     background: black;
     border: 2px solid #ff8d00;
     padding: 15px;
-    max-width: 1500px;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -33,6 +33,10 @@ body {
     text-align: center;
     font-size: 9cqh;
     font-weight: bold;
+}
+
+.magi>.header {
+    overflow: hidden;
 }
 
 .magi>.header>hr {
@@ -181,9 +185,9 @@ body {
     font-family: 'Lucida Console';
     position: absolute;
     background: black;
-    max-width: 40vw;
-    top: 10vh;
-    right: 10vw;
+    max-width: 60%;
+    top: 10%;
+    right: 10%;
 }
 
 .modal>.modal-header {
