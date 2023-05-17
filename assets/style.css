@@ -30,19 +30,19 @@ body {
         /**/
         2fr
         /**/
-        [balthasar-start casper-balthasar-connection]
+        [left-header-end balthasar-start casper-balthasar-connection]
         /**/
         0.5fr
         /**/
-        [casper-end left-header-end title casper-melchior-connection]
+        [casper-end title casper-melchior-connection]
         /**/
         1fr
         /**/
-        [balthasar-melchior-connection right-header-start melchior-start]
+        [balthasar-melchior-connection melchior-start]
         /**/
         0.5fr
         /**/
-        [balthasar-end response]
+        [right-header-start balthasar-end response]
         /**/
         2fr
         /**/

@@ -1,4 +1,5 @@
 import React from 'react';
+const $ = React.createElement;
 
 export default function Modal({ setProps, name, is_open, question, answer }) {
     if (!is_open) return null;
@@ -7,28 +8,28 @@ export default function Modal({ setProps, name, is_open, question, answer }) {
     const answerId = answer.id;
 
     if (questionId !== answerId)
-        answer = { id: questionId, status: 'error', error: 'questionId !== answerId' };
+        answer = { id: questionId, status: 'error', error: 'loading...' };
 
     const close = () => {
         setProps({ is_open: false });
     };
 
-    return React.createElement('div', { className: 'modal' }, [
-        React.createElement('div', { className: 'modal-header' }, [
-            React.createElement('div', { className: 'modal-title' }, [name]),
-            React.createElement('div', { className: 'close', onClick: close }, ['X']),
-        ]),
-        React.createElement('div', { className: 'modal-body' }, [
-            React.createElement('div', {}, 'question: '),
-            React.createElement('div', {}, question.query),
-            React.createElement('div', {}, 'status: '),
-            React.createElement('div', {}, answer.status),
-            React.createElement('div', {}, 'error: '),
-            React.createElement('div', {}, answer.error),
-            React.createElement('div', {}, 'conditions: '),
-            React.createElement('div', {}, answer.conditions),
-            React.createElement('div', {}, 'full response: '),
-            React.createElement('div', {}, answer.response)
-        ]),
-    ]);
+    return $('div', { className: 'modal' },
+        $('div', { className: 'modal-header' },
+            $('div', { className: 'modal-title' }, name),
+            $('div', { className: 'close', onClick: close }, 'X'),
+        ),
+        $('div', { className: 'modal-body' },
+            $('div', {}, 'question: '),
+            $('div', {}, question.query),
+            $('div', {}, 'status: '),
+            $('div', {}, answer.status),
+            $('div', {}, 'error: '),
+            $('div', {}, answer.error),
+            $('div', {}, 'conditions: '),
+            $('div', {}, answer.conditions),
+            $('div', {}, 'full response: '),
+            $('div', {}, answer.response)
+        ),
+    );
 }

@@ -19,10 +19,10 @@ def is_yes_or_no_question(question: str, key: str):
 
     content = response['choices'][0]['message']['content']
 
-    if re.match('^\W*yes\W*$', content, re.IGNORECASE):
+    if content == 'Yes':
         return True
 
-    if re.match('^\W*no\W*$', content, re.IGNORECASE):
+    if content == 'No':
         return False
 
     raise Exception(f'Invalid question annotation response: {content}')

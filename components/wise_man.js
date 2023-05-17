@@ -1,7 +1,7 @@
 import React from 'react';
+const $ = React.createElement;
 
-
-function useColor(status) {
+function getColor(status) {
     if (status === 'yes')
         return '#52e691';
 
@@ -20,22 +20,23 @@ function useColor(status) {
     throw new Error(`Invalid status: ${status}`);
 }
 
-export default function WiseMan(props) {
-    const { setProps, name, order_number, question_id, answer, n_clicks } = props;
+export default function WiseMan({ setProps, name, order_number, question_id, answer, n_clicks }) {
     const fullName = `${name.toUpperCase()} • ${order_number}`;
-    const color = useColor(answer['status']);
+    const color = getColor(answer['status']);
     const processing = question_id !== answer['id'];
 
     const onClick = () => {
         setProps({ n_clicks: n_clicks + 1 });
     };
 
-    return React.createElement('div', { className: `wise-man ${name}`, onClick: onClick, key: name },
-        [
-            React.createElement('div', { className: `inner ${processing ? 'flicker' : ''}`, style: { background: color } }, [
-                fullName
-            ])
-        ])
+    let outerClassName = `wise-man ${name}`;
+    let innerClassName = 'inner';
+    if (processing)
+        innerClassName += ' flicker';
+
+    return $('div', { className: outerClassName, onClick: onClick, key: name },
+        $('div', { className: innerClassName, style: { background: color } }, fullName)
+    )
 }
 
 WiseMan.defaultProps = {

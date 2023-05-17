@@ -1,8 +1,7 @@
-from dataclasses import dataclass
 import os
-from dash_extensions.enrich import Dash, Input, Output, State, Trigger, callback, ALL, MATCH, callback_context
+from dash_extensions.enrich import Dash, Input, Output, State, Trigger, callback, ALL, MATCH
 import dash_core_components as dcc
-import dash_html_components as html
+from dash_html_components import Div, Label
 from dash_local_react_components import load_react_component
 import ai
 
@@ -12,58 +11,37 @@ Magi = load_react_component(app, 'components', 'magi.js')
 WiseMan = load_react_component(app, 'components', 'wise_man.js')
 Response = load_react_component(app, 'components', 'response.js')
 Modal = load_react_component(app, 'components', 'modal.js')
+Header = load_react_component(app, 'components', 'header.js')
+Status = load_react_component(app, 'components', 'status.js')
 
-app.layout = html.Div(
+app.layout = Div(
     className='system',
     children=[
         Magi(id='magi', children=[
-              html.Div(className='connection casper-balthasar'),
-              html.Div(className='connection casper-melchior'),
-              html.Div(className='connection balthasar-melchior'),
-              html.Div(className='header left', children=[
-                  html.Hr(),
-                  html.Hr(),
-                  html.Span('質 問 '),
-                  html.Hr(),
-                  html.Hr()
-              ]),
-            html.Div(className='header right', children=[
-                html.Hr(),
-                html.Hr(),
-                html.Span('解 決 '),
-                html.Hr(),
-                html.Hr()
-            ]),
-            html.Div(
-                  className='system-status',
-                  children=[
-                      html.Div(children='CODE:473'),
-                      html.Div(children='FILE:MAGI_SYS'),
-                      html.Div(id='extention', children='EXTENTION:????'),
-                      html.Div(children='EX_MODE:OFF'),
-                      html.Div(children='PRIORITY:AAA')]),
+            Header(side='left', title='質 問'),
+            Header(side='right', title='解 決'),
+            Status(id='status'),
             WiseMan(
-                  id={'type': 'wise-man', 'name': 'melchior'},
-                  name='melchior',
-                  order_number=1,
-                  personality='You are a scientist. Your goal is to further our understanding of the universe and advance our technological progress.'),
+                id={'type': 'wise-man', 'name': 'melchior'},
+                name='melchior',
+                order_number=1,
+                personality='You are a scientist. Your goal is to further our understanding of the universe and advance our technological progress.'),
             WiseMan(
-                  id={'type': 'wise-man', 'name': 'balthasar'},
-                  name='balthasar',
-                  order_number=2,
-                  personality='You are a mother. Your goal is to protect your children and ensure their well-being.'),
+                id={'type': 'wise-man', 'name': 'balthasar'},
+                name='balthasar',
+                order_number=2,
+                personality='You are a mother. Your goal is to protect your children and ensure their well-being.'),
             WiseMan(
-                  id={'type': 'wise-man', 'name': 'casper'},
-                  name='casper',
-                  order_number=3,
-                  personality='You are a woman. Your goal is to pursue love, dreams and desires.'),
-            Response(id='response', status='info'),
-            html.Div(className='title', children='MAGI')
+                id={'type': 'wise-man', 'name': 'casper'},
+                name='casper',
+                order_number=3,
+                personality='You are a woman. Your goal is to pursue love, dreams and desires.'),
+            Response(id='response', status='info')
         ]),
-        html.Div(className='input-container', children=[
-            html.Label('access code: '),
+        Div(className='input-container', children=[
+            Label('access code: '),
             dcc.Input(id='key', autoComplete='off', type='password', value=os.getenv('OPENAI_API_KEY', '')),
-            html.Label('question: '),
+            Label('question: '),
             dcc.Input(id='query', type='text', value='', debounce=True, autoComplete='off'),
         ]),
         Modal(id={'type': 'modal', 'name': 'melchior'}, name='melchior'),
@@ -83,8 +61,6 @@ app.layout = html.Div(
     State('question', 'data'),
     prevent_initial_call=True)
 def question(query: str, question: dict):
-    print('question')
-
     return {'id': question['id'] + 1, 'query': query}
 
 
@@ -94,12 +70,8 @@ def question(query: str, question: dict):
     State('key', 'value'),
     prevent_initial_call=True)
 def annotated_question(question: dict, key: str):
-    print('annotated_question')
-
     try:
         is_yes_or_no_question = ai.is_yes_or_no_question(question['query'], key)
-
-        print(is_yes_or_no_question)
 
         return {
             'id': question['id'],
@@ -108,7 +80,6 @@ def annotated_question(question: dict, key: str):
             'error': None
         }
     except Exception as e:
-        print(e)
         return {
             'id': question['id'],
             'query': question['query'],
@@ -118,15 +89,14 @@ def annotated_question(question: dict, key: str):
 
 
 @callback(
-    Output('extention', 'children'),
+    Output('status', 'extention'),
     Input('question', 'data'),
     Input('annotated-question', 'data'))
 def extention(question: dict, annotated_question: dict):
     if question['id'] != annotated_question['id']:
-        return 'EXTENTION:????'
+        return '????'
 
-    code = '7312' if annotated_question['is_yes_or_no_question'] else '3023'
-    return f'EXTENTION:{code}'
+    return '7312' if annotated_question['is_yes_or_no_question'] else '3023'
 
 
 @callback(
@@ -136,26 +106,20 @@ def extention(question: dict, annotated_question: dict):
     State('key', 'value'),
     prevent_initial_call=True)
 def wise_man_answer(question: dict, personality: str, key: str):
-    print('wise_man_answer')
-
     if question['error']:
         return {'id': question['id'], 'response': question['error'], 'status': 'error'}
 
     try:
         answer = ai.get_answer(question['query'], personality, key)
-        print(answer)
 
         if question['is_yes_or_no_question']:
             classification = ai.classify_answer(question['query'], personality, answer, key)
         else:
             classification = {'status': 'info', 'conditions': None}
 
-        print(classification)
-
         return {'id': question['id'], 'response': answer, 'status': classification['status'], 'conditions': classification['conditions'], 'error': None}
 
     except Exception as e:
-        print(e)
         return {'id': question['id'], 'response': None, 'status': 'error', 'conditions': 'None', 'error': str(e)}
 
 
@@ -198,7 +162,7 @@ def response_status(answers: list):
     Output({'type': 'modal', 'name': MATCH}, 'is_open'),
     Trigger({'type': 'wise-man', 'name': MATCH}, 'n_clicks'),
     prevent_initial_call=True)
-def modal():
+def modal_visibility():
     return True
 
 
@@ -207,7 +171,7 @@ def modal():
     Output({'type': 'modal', 'name': MATCH}, 'answer'),
     Input('question', 'data'),
     Input({'type': 'wise-man', 'name': MATCH}, 'answer'))
-def modal(question: dict, answer: dict):
+def modal_content(question: dict, answer: dict):
     return question, answer
 
 

@@ -1,4 +1,5 @@
 import React from 'react';
+const $ = React.createElement;
 
 function getStatusText(status) {
     if (status === 'info')
@@ -38,16 +39,17 @@ function getStatusColor(status) {
     throw new Error('Invalid status: ' + status);
 }
 
-export default function Response(props) {
-    const { status, question_id, answer_id } = props;
-
+export default function Response({ status, question_id, answer_id }) {
     const text = getStatusText(status);
     const color = getStatusColor(status);
 
-    return React.createElement('div', { className: `response ${question_id !== answer_id ? 'flicker' : ''}`, style: { color: color, borderColor: color } },
-        [
-            React.createElement('div', { className: 'inner' }, [text])
-        ]);
+    let className = 'response';
+    if (question_id !== answer_id)
+        className += ' flicker';
+
+    return $('div', { className, style: { color: color, borderColor: color } },
+        $('div', { className: 'inner' }, text)
+    );
 }
 
 Response.defaultProps = {
