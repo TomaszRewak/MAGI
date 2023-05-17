@@ -39,13 +39,19 @@ function getStatusColor(status) {
 }
 
 export default function Response(props) {
-    const { status } = props;
+    const { status, question_id, answer_id } = props;
 
     const text = getStatusText(status);
     const color = getStatusColor(status);
 
-    return React.createElement('div', { className: 'response', style: { color: color, borderColor: color } },
+    return React.createElement('div', { className: `response ${question_id !== answer_id ? 'flicker' : ''}`, style: { color: color, borderColor: color } },
         [
             React.createElement('div', { className: 'inner' }, [text])
         ]);
 }
+
+Response.defaultProps = {
+    status: 'info',
+    question_id: 0,
+    answer_id: 0
+};

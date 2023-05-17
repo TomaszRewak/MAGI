@@ -162,25 +162,36 @@ def wise_man_answer(question: dict, personality: str, key: str):
 @callback(
     Output({'type': 'wise-man', 'name': MATCH}, 'question_id'),
     Input('question', 'data'))
-def question_id(question: dict):
+def wise_man_question_id(question: dict):
+    return question['id']
+
+
+@callback(
+    Output('response', 'question_id'),
+    Input('question', 'data'))
+def response_question_id(question: dict):
     return question['id']
 
 
 @callback(
     Output('response', 'status'),
+    Output('response', 'answer_id'),
     Input({'type': 'wise-man', 'name': ALL}, 'answer'),
     prevent_initial_call=True)
 def response_status(answers: list):
+    answer_id = min([answer['id'] for answer in answers])
+    status = 'info'
+
     if any([answer['status'] == 'error' for answer in answers]):
-        return 'error'
-    if any([answer['status'] == 'no' for answer in answers]):
-        return 'no'
-    if any([answer['status'] == 'conditional' for answer in answers]):
-        return 'conditional'
-    if all([answer['status'] == 'yes' for answer in answers]):
-        return 'yes'
-    
-    return 'info'
+        status = 'error'
+    elif any([answer['status'] == 'no' for answer in answers]):
+        status = 'no'
+    elif any([answer['status'] == 'conditional' for answer in answers]):
+        status = 'conditional'
+    elif all([answer['status'] == 'yes' for answer in answers]):
+        status = 'yes'
+
+    return status, answer_id
 
 
 @callback(
