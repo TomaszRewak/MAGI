@@ -20,15 +20,67 @@ body {
 
 .magi {
     display: grid;
-    grid-template-columns: 20px 2fr 0.5fr 1fr 0.5fr 2fr 20px;
-    grid-template-rows: 20px 2fr 2fr 1fr 3fr 20px;
+    grid-template-columns:
+        /**/
+        [left-header-start]
+        /**/
+        20px
+        /**/
+        [casper-start status]
+        /**/
+        2fr
+        /**/
+        [balthasar-start casper-balthasar-connection]
+        /**/
+        0.5fr
+        /**/
+        [casper-end left-header-end title casper-melchior-connection]
+        /**/
+        1fr
+        /**/
+        [balthasar-melchior-connection right-header-start melchior-start]
+        /**/
+        0.5fr
+        /**/
+        [balthasar-end response]
+        /**/
+        2fr
+        /**/
+        [melchior-end]
+        /**/
+        20px
+        /**/
+        [right-header-end];
+    grid-template-rows:
+        /**/
+        20px
+        /**/
+        [header balthasar-start]
+        /**/
+        2fr
+        /**/
+        [status response]
+        /**/
+        2fr
+        /**/
+        [casper-start melchior-start casper-balthasar-connection balthasar-melchior-connection]
+        /**/
+        1fr
+        /**/
+        [balthasar-end title casper-melchior-connection]
+        /**/
+        3fr
+        /**/
+        [casper-end melchior-end]
+        /**/
+        20px;
     aspect-ratio: 2 / 1;
     container-type: size;
     border: 2px solid #ff8d00;
 }
 
 .magi>.title {
-    grid-area: 5 / 4;
+    grid-area: title / title;
     color: #ff8d00;
     text-align: center;
     font-size: 9cqh;
@@ -55,15 +107,15 @@ body {
 }
 
 .magi>.header.left {
-    grid-area: 2 / 1 / 3 / 3;
+    grid-area: header / left-header-start / auto / left-header-end;
 }
 
 .magi>.header.right {
-    grid-area: 2 / 6 / 3 / 8;
+    grid-area: header / right-header-start / auto / right-header-end;
 }
 
 .magi>.system-status {
-    grid-area: 3 / 2 / 4 / 3;
+    grid-area: status;
     font-family: 'Helvetica';
     font-family: 'Lucida Console';
     color: #ff8d00;
@@ -82,7 +134,7 @@ body {
 }
 
 .magi>.response {
-    grid-area: 3 / 6 / 4 / 7;
+    grid-area: response;
     justify-self: flex-end;
     align-self: center;
     border: solid 2px;
@@ -116,7 +168,7 @@ body {
 }
 
 .magi>.wise-man.melchior {
-    grid-area: 4 / 5 / 6 / 7;
+    grid-area: melchior-start / melchior-start / melchior-end / melchior-end;
 }
 
 .magi>.wise-man.melchior,
@@ -125,7 +177,7 @@ body {
 }
 
 .magi>.wise-man.balthasar {
-    grid-area: 2 / 3 / 5 / 6;
+    grid-area: balthasar-start / balthasar-start / balthasar-end / balthasar-end;
 }
 
 .magi>.wise-man.balthasar,
@@ -134,7 +186,7 @@ body {
 }
 
 .magi>.wise-man.casper {
-    grid-area: 4 / 2 / 6 / 4;
+    grid-area: casper-start / casper-start / casper-end / casper-end;
 }
 
 .magi>.wise-man.casper,
@@ -165,16 +217,16 @@ body {
 }
 
 .connection.casper-balthasar {
-    grid-area: 4 / 3 / 5 / 4;
+    grid-area: casper-balthasar-connection;
     transform: rotate(-54deg);
 }
 
 .connection.casper-melchior {
-    grid-area: 5 / 4 / 6 / 5;
+    grid-area: casper-melchior-connection;
 }
 
 .connection.balthasar-melchior {
-    grid-area: 4 / 5 / 5 / 6;
+    grid-area: balthasar-melchior-connection;
     transform: rotate(54deg);
 }
 
