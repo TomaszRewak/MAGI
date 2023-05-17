@@ -2,12 +2,12 @@
 
 MAGI system is a cluster of three AI supercomputers that manage and support all task performed by the NERV organization from their Tokyo-3 headquarter.
 
-Originally designed by Dr. Naoko Akagi, each of the three agents reflects a separate part of her complex personality:
+Originally designed by Dr. Naoko Akagi, each of the three AI agents reflects a separate part of her complex personality:
 - MELCHIOR • 1 - her as a scientist,
 - BALTHASAR • 2 - her as a mother,
 - CASPER • 3 - her as a woman.
 
-Those (often conflicting, yet complementary) agents often participate in a voting process in order to answer most challenging questions. 
+Those (often conflicting, yet complementary) agents participate in a voting process in order to answer most challenging questions. 
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/TomaszRewak/MAGI/master/examples/example_1.gif" width=800/>
@@ -24,10 +24,10 @@ The presented implementation of the MAGI system is powered by the ChatGPT-3.5 la
 The procedure of answering questions is as follows:
 1. The question is classified in order to determine if it can be answered with a "yes"/"no" response.
 2. The question (as is) is presented to each MAGI agent.
-3. If the question was classified as a "yes"/"no" question, each agent is tasked with classifying their respective answers into those two categories (and optionally listing additional conditions if the answer is too complex).
+3. If the question was classified as a "yes"/"no" question, each agent is tasked with classifying their respective answers into one of those two categories (and optionally listing additional conditions if the actual answer is too complex).
 
 The system can produce following responses (that are evaluated in this order):
-- error (誤 差) - if one or more agents encountered errors
+- error (誤 差) - if one or more agents encountered an error
 - info (情 報) - if the question was not classified as a "yes"/"no" question
 - no (拒 絶) - if at least one of the agent answered with a "no"
 - conditional (状 態) - if at least one agent answered with a conditional "yes"
@@ -82,7 +82,7 @@ python main.py
 
 7. Navigate to http://127.0.0.1:8050/ in your web browser.
 
-8. Paste your openAI API key into the `access code` field (alternatively you can set the `OPENAI_API_KEY` environment variable).
+8. Paste your openAI API key into the `access code` field (alternatively you can set the `OPENAI_API_KEY` environment variable before starting the app).
 
 9. Write your question into the `question` field and hit enter.
 
