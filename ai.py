@@ -48,7 +48,7 @@ def classify_answer(question: str, personality: str, answer: str, key: str):
         messages=[
             {'role': 'system', 'content': f'{personality} Your answers are rather concise.'},
             {'role': 'user', 'content': question},
-            {'role': 'system', 'content': answer},
+            {'role': 'assistant', 'content': answer},
             {'role': 'user', 'content': 'Summarize you answer with a simple "yes" or "no" (answering with a single word). If (and only if) that\'s not possible, instead of answering with "yes" or "no", list conditions under which the answer would be "yes".'},
         ]
     )
