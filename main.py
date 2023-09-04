@@ -1,7 +1,7 @@
 import os
 from dash_extensions.enrich import Dash, Input, Output, State, Trigger, callback, ALL, MATCH
-import dash_core_components as dcc
-from dash_html_components import Div, Label
+from dash import dcc
+from dash.html import Div, Label
 from dash_local_react_components import load_react_component
 import ai
 
