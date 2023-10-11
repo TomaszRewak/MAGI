@@ -20,7 +20,7 @@ def is_yes_or_no_question(question: str, key: str):
             {'role': 'system', 'content': '[Example 3] User: Should I buy new shoes?; You: Yes'},
             {'role': 'system', 'content': '[Example 4] User: Is love more important than science?; You: Yes'},
             {'role': 'system', 'content': '[Example 5] User: What is the meaning of life?; You: No'},
-            {'role': 'user', 'content': f'Is the following question a boolean question from a linguistic perspective? \n {question}'},
+            {'role': 'user', 'content': question},
         ]
     )
 
